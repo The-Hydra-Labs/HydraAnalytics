@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import { MessageSquare, MessageCircle, X, Send, Sparkles, Loader2 } from 'lucide-react';
 import { GoogleGenAI } from '@google/genai';
 
-// Initialize Gemini API
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+// The landing page must remain usable when no Gemini key is configured locally.
+const apiKey = process.env.GEMINI_API_KEY;
+const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
 
 type Message = {
   id: string;
@@ -44,6 +45,16 @@ export default function HydraAI() {
 
     setMessages(prev => [...prev, userMessage]);
     setInput('');
+
+    if (!ai) {
+      setMessages(prev => [...prev, {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: 'O assistente de IA ainda não está configurado neste ambiente. Fale com a nossa equipe pelo WhatsApp para saber mais.'
+      }]);
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -192,3 +203,4 @@ export default function HydraAI() {
     </>
   );
 }
+

@@ -9,6 +9,7 @@ import Benefits from './components/Benefits';
 import Pricing from './components/Pricing';
 import Differentials from './components/Differentials';
 import FutureVision from './components/FutureVision';
+import HydraEcosystem from './components/HydraEcosystem';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
 import HydraAI from './components/HydraAI';
@@ -19,6 +20,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <HydraEcosystem />
         <Problem />
         <Solution />
         <Automation />
